@@ -21,7 +21,7 @@
     "typescript": "~5.4.0"
   },
   "scripts": {
-    "android": "ns run android",
+    "android": "ns run android --no-hmr",
     "ios": "ns run ios",
     "build:android": "ns build android",
     "build:ios": "ns build ios",
