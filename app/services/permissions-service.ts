@@ -15,11 +15,21 @@ export async function requestPermissions() {
       let storageGranted = true;
 
       if (!permissions.hasPermission(readPermission)) {
-        storageGranted = await permissions.requestPermission(readPermission);
+        try {
+          storageGranted = await permissions.requestPermission(readPermission);
+        } catch (error) {
+          console.error('Error requesting READ_EXTERNAL_STORAGE permission:', error);
+          storageGranted = false;
+        }
       }
       
       if (storageGranted && !permissions.hasPermission(writePermission)) {
-        storageGranted = await permissions.requestPermission(writePermission);
+        try {
+          storageGranted = await permissions.requestPermission(writePermission);
+        } catch (error) {
+          console.error('Error requesting WRITE_EXTERNAL_STORAGE permission:', error);
+          storageGranted = false;
+        }
       }
 
       return cameraGranted && storageGranted;
@@ -40,9 +50,12 @@ export async function checkCameraPermission() {
       const readPermission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
       const writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
       
-      return hasCamera && 
-             permissions.hasPermission(readPermission) &&
-             permissions.hasPermission(writePermission);
+      const hasRead = permissions.hasPermission(readPermission);
+      const hasWrite = permissions.hasPermission(writePermission);
+      
+      console.log(`Permission check: Camera=${hasCamera}, Read=${hasRead}, Write=${hasWrite}`);
+      
+      return hasCamera && hasRead && hasWrite;
     }
     
     return hasCamera;

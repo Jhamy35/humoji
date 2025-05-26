@@ -1,12 +1,6 @@
 import { ImageSource } from '@nativescript/core';
-import { FilterView } from 'nativescript-filterview';
 
 export class HumojiProcessorService {
-  private filterView: FilterView;
-  
-  constructor() {
-    this.filterView = new FilterView();
-  }
   
   async processImage(imageSource: ImageSource, style: string = 'bubble'): Promise<ImageSource> {
     try {
@@ -33,113 +27,142 @@ export class HumojiProcessorService {
     const size = Math.min(width, height);
     
     // Calculate crop dimensions to get a centered square
-    const x = (width - size) / 2;
-    const y = (height - size) / 2;
+    const x = Math.floor((width - size) / 2);
+    const y = Math.floor((height - size) / 2);
     
-    // Crop the image
-    return this.filterView.applyFilter({
-      image: imageSource,
-      filter: 'crop',
-      options: {
-        x,
-        y,
-        width: size,
-        height: size
+    try {
+      // Create a new image source from the cropped region
+      const newImageSource = new ImageSource();
+      // Use native image manipulation to crop
+      if (imageSource.android) {
+        const bitmap = imageSource.android;
+        const croppedBitmap = android.graphics.Bitmap.createBitmap(
+          bitmap, x, y, size, size
+        );
+        newImageSource.setNativeSource(croppedBitmap);
+        return newImageSource;
+      } else {
+        // For iOS implementation
+        return imageSource;
       }
-    });
+    } catch (error) {
+      console.error('Error cropping image:', error);
+      return imageSource;
+    }
   }
   
   private async applyBubbleStyle(imageSource: ImageSource): Promise<ImageSource> {
-    let processed = await this.filterView.applyFilter({
-      image: imageSource,
-      filter: 'brightness',
-      options: { value: 1.2 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'contrast',
-      options: { value: 1.3 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'saturation',
-      options: { value: 1.5 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'cartoon'
-    });
-    
-    // Apply circular mask
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'circularCrop'
-    });
-    
-    return processed;
+    try {
+      // Apply basic image adjustments for bubble style
+      if (imageSource.android) {
+        const bitmap = imageSource.android;
+        const width = bitmap.getWidth();
+        const height = bitmap.getHeight();
+        
+        // Create a new bitmap with the same dimensions
+        const resultBitmap = android.graphics.Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.ARGB_8888);
+        const canvas = new android.graphics.Canvas(resultBitmap);
+        
+        // Apply a color filter for the bubble effect
+        const paint = new android.graphics.Paint();
+        paint.setColorFilter(new android.graphics.LightingColorFilter(0xFF9EDBFF, 0));
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        
+        // Apply circular mask
+        return this.applyCircularMask(new ImageSource().setNativeSource(resultBitmap));
+      }
+      
+      return imageSource;
+    } catch (error) {
+      console.error('Error applying bubble style:', error);
+      return imageSource;
+    }
   }
   
   private async applyMarbleStyle(imageSource: ImageSource): Promise<ImageSource> {
-    let processed = await this.filterView.applyFilter({
-      image: imageSource,
-      filter: 'brightness',
-      options: { value: 1.1 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'contrast',
-      options: { value: 1.2 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'grayscale',
-      options: { value: 0.5 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'tint',
-      options: { color: '#3498db', amount: 0.3 }
-    });
-    
-    // Apply circular mask
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'circularCrop'
-    });
-    
-    return processed;
+    try {
+      // Apply basic image adjustments for marble style
+      if (imageSource.android) {
+        const bitmap = imageSource.android;
+        const width = bitmap.getWidth();
+        const height = bitmap.getHeight();
+        
+        // Create a new bitmap with the same dimensions
+        const resultBitmap = android.graphics.Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.ARGB_8888);
+        const canvas = new android.graphics.Canvas(resultBitmap);
+        
+        // Apply a color filter for the marble effect
+        const paint = new android.graphics.Paint();
+        paint.setColorFilter(new android.graphics.LightingColorFilter(0xFFE0E0E0, 0));
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        
+        // Apply circular mask
+        return this.applyCircularMask(new ImageSource().setNativeSource(resultBitmap));
+      }
+      
+      return imageSource;
+    } catch (error) {
+      console.error('Error applying marble style:', error);
+      return imageSource;
+    }
   }
   
   private async applyClassicStyle(imageSource: ImageSource): Promise<ImageSource> {
-    let processed = await this.filterView.applyFilter({
-      image: imageSource,
-      filter: 'brightness',
-      options: { value: 1.1 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'contrast',
-      options: { value: 1.2 }
-    });
-    
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'cartoon'
-    });
-    
-    // Apply circular mask
-    processed = await this.filterView.applyFilter({
-      image: processed,
-      filter: 'circularCrop'
-    });
-    
-    return processed;
+    try {
+      // Apply basic image adjustments for classic style
+      if (imageSource.android) {
+        const bitmap = imageSource.android;
+        const width = bitmap.getWidth();
+        const height = bitmap.getHeight();
+        
+        // Create a new bitmap with the same dimensions
+        const resultBitmap = android.graphics.Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.ARGB_8888);
+        const canvas = new android.graphics.Canvas(resultBitmap);
+        
+        // Apply a color filter for the classic effect
+        const paint = new android.graphics.Paint();
+        paint.setColorFilter(new android.graphics.LightingColorFilter(0xFFFFF0E0, 0));
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        
+        // Apply circular mask
+        return this.applyCircularMask(new ImageSource().setNativeSource(resultBitmap));
+      }
+      
+      return imageSource;
+    } catch (error) {
+      console.error('Error applying classic style:', error);
+      return imageSource;
+    }
+  }
+  
+  private applyCircularMask(imageSource: ImageSource): ImageSource {
+    try {
+      if (imageSource.android) {
+        const bitmap = imageSource.android;
+        const width = bitmap.getWidth();
+        const height = bitmap.getHeight();
+        
+        // Create a new bitmap with the same dimensions
+        const output = android.graphics.Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.ARGB_8888);
+        const canvas = new android.graphics.Canvas(output);
+        const paint = new android.graphics.Paint();
+        const rect = new android.graphics.Rect(0, 0, width, height);
+        
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        canvas.drawCircle(width / 2, height / 2, width / 2, paint);
+        
+        // Apply the source bitmap using PorterDuff mode SRC_IN
+        paint.setXfermode(new android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        
+        return new ImageSource().setNativeSource(output);
+      }
+      
+      return imageSource;
+    } catch (error) {
+      console.error('Error applying circular mask:', error);
+      return imageSource;
+    }
   }
 }
