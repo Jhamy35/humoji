@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@nativescript/android": "8.8.0",
+    "@nativescript/ios": "8.8.0",
     "@nativescript/preview-cli": "1.0.14",
     "@nativescript/tailwind": "^2.1.0",
     "@nativescript/types-minimal": "~8.8.0",
