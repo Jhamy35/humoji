@@ -9,10 +9,6 @@ export default {
     markingMode: 'none',
     maxLogcatObjectSize: 2048,
     androidHome: '/usr/local/android-sdk',
-    cameraPermission: {
-      message: 'This app needs access to the camera to take photos'
-    },
-    requiresCamera: true,
     releaseConfig: {
       keyAlias: 'humojiapp',
       keyPassword: 'YOUR_KEY_PASSWORD',

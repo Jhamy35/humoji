@@ -1,5 +1,8 @@
 {
   "installDependencies": true,
   "compileTrigger": "save",
-  "startCommand": "npm run preview"
+  "startCommand": "npm run preview",
+  "env": {
+    "ANDROID_HOME": "/usr/local/android-sdk"
+  }
 }
