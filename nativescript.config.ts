@@ -18,5 +18,10 @@ export default {
         signingConfig: 'release'
       }
     }
+  },
+  preview: {
+    timeout: 60000,
+    port: 0,
+    hmr: false
   }
 } as NativeScriptConfig;
