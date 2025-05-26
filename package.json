@@ -25,7 +25,7 @@
     "ios": "ns run ios",
     "build:android": "ns build android",
     "build:ios": "ns build ios",
-    "preview": "ns preview --env.preview --env.production=false --env.uglify=false",
-    "dev": "ns preview --env.preview --env.production=false --env.uglify=false"
+    "preview": "ns preview",
+    "dev": "ns preview"
   }
 }
