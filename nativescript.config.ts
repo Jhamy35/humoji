@@ -21,6 +21,6 @@ export default {
   },
   preview: {
     port: 3000,
-    hmr: true
+    hmr: false
   }
 } as NativeScriptConfig;
