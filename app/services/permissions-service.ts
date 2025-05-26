@@ -1,24 +1,27 @@
 import { android as androidApp, isAndroid } from '@nativescript/core/application';
-import { requestPermissions as requestCameraPermissions } from '@nativescript/camera';
+import { requestPermissions as requestCameraPermissions, hasPermissions as hasCameraPermissions } from '@nativescript/camera';
 import * as permissions from 'nativescript-permissions';
 
 export async function requestPermissions() {
   try {
     // Request camera permission first
-    const cameraPermission = await requestCameraPermissions();
+    await requestCameraPermissions();
     
     // Request storage permissions on Android
     if (isAndroid) {
       const readPermission = android.Manifest.permission.READ_EXTERNAL_STORAGE;
       const writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
       
-      const hasReadPermission = await permissions.requestPermission(readPermission);
-      const hasWritePermission = await permissions.requestPermission(writePermission);
+      if (!permissions.hasPermission(readPermission)) {
+        await permissions.requestPermission(readPermission);
+      }
       
-      return hasReadPermission && hasWritePermission && cameraPermission;
+      if (!permissions.hasPermission(writePermission)) {
+        await permissions.requestPermission(writePermission);
+      }
     }
     
-    return cameraPermission;
+    return true;
   } catch (error) {
     console.error('Error requesting permissions:', error);
     return false;
@@ -27,11 +30,7 @@ export async function requestPermissions() {
 
 export async function checkCameraPermission() {
   try {
-    if (isAndroid) {
-      const permission = android.Manifest.permission.CAMERA;
-      return permissions.hasPermission(permission);
-    }
-    return true;
+    return await hasCameraPermissions();
   } catch (error) {
     console.error('Error checking camera permission:', error);
     return false;

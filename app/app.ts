@@ -3,12 +3,20 @@ import { requestPermissions, checkCameraPermission } from './services/permission
 
 // Request permissions when the app starts
 async function initialize() {
-  const hasPermissions = await checkCameraPermission();
-  if (!hasPermissions) {
-    await requestPermissions();
+  try {
+    const hasPermissions = await checkCameraPermission();
+    if (!hasPermissions) {
+      await requestPermissions();
+    }
+  } catch (error) {
+    console.error('Error during initialization:', error);
   }
 }
 
+// Initialize and run the app
 initialize().then(() => {
+  Application.run({ moduleName: 'app-root' });
+}).catch(error => {
+  console.error('Failed to initialize app:', error);
   Application.run({ moduleName: 'app-root' });
 });
