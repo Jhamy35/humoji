@@ -1,0 +1,31 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page">
+    <ActionBar title="My Humojis" class="bg-white text-black">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" tap="{{ onBackTap }}" />
+    </ActionBar>
+
+    <GridLayout rows="auto, *">
+        <!-- Header area -->
+        <StackLayout row="0" class="p-4 bg-gray-50">
+            <Label text="Your humoji collection" class="subtitle" />
+        </StackLayout>
+        
+        <!-- Gallery grid -->
+        <GridLayout row="1" rows="*">
+            <ListView items="{{ humojis }}" class="list-group" itemTap="{{ onHumojiTap }}">
+                <ListView.itemTemplate>
+                    <GridLayout columns="auto, *" class="list-group-item p-2 border-b border-gray-200">
+                        <Image col="0" src="{{ imageUrl }}" class="humoji-bubble mr-4" />
+                        <StackLayout col="1" verticalAlignment="center">
+                            <Label text="{{ 'Created: ' + createdAt }}" class="text-sm text-gray-500" />
+                            <Label text="{{ 'Style: ' + style }}" class="text-sm text-gray-500" />
+                        </StackLayout>
+                    </GridLayout>
+                </ListView.itemTemplate>
+            </ListView>
+            <StackLayout verticalAlignment="center" horizontalAlignment="center" visibility="{{ humojis.length > 0 ? 'collapsed' : 'visible' }}">
+                <Label text="No humojis yet" class="text-gray-400 text-lg" />
+                <Label text="Create your first humoji on the home screen" class="text-gray-400 text-sm" textWrap="true" />
+            </StackLayout>
+        </GridLayout>
+    </GridLayout>
+</Page>

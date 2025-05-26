@@ -1,0 +1,66 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page">
+    <ActionBar title="Edit Humoji" class="bg-white text-black">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" tap="{{ onBackTap }}" />
+        <ActionItem ios.position="right" android.position="actionBar" tap="{{ onSaveTap }}">
+            <Label text="Save" class="text-blue-500 mr-4" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <!-- Main content area -->
+        <StackLayout row="0" class="p-4">
+            <GridLayout rows="auto, *" class="w-full">
+                <!-- Preview of the processed image -->
+                <GridLayout row="0" rows="auto" columns="*" class="w-full mb-4">
+                    <Image src="{{ processedImageSource }}" class="humoji-bubble-lg mx-auto my-4 shadow-md" />
+                    <ActivityIndicator busy="{{ isProcessing }}" width="50" height="50" />
+                </GridLayout>
+                
+                <!-- Styling options -->
+                <ScrollView row="1" class="w-full">
+                    <StackLayout class="p-4">
+                        <Label text="Style" class="font-semibold text-lg mb-2" />
+                        <GridLayout rows="auto" columns="*, *, *" class="mb-4">
+                            <StackLayout col="0" class="text-center p-2" tap="{{ onStyleTap }}" id="bubble">
+                                <Image src="~/assets/style-bubble.png" class="h-16 w-16 rounded-full mx-auto" />
+                                <Label text="Bubble" class="text-sm mt-1" />
+                                <Label text="✓" class="text-blue-500 font-bold" visibility="{{ selectedStyle === 'bubble' ? 'visible' : 'collapsed' }}" />
+                            </StackLayout>
+                            <StackLayout col="1" class="text-center p-2" tap="{{ onStyleTap }}" id="marble">
+                                <Image src="~/assets/style-marble.png" class="h-16 w-16 rounded-full mx-auto" />
+                                <Label text="Marble" class="text-sm mt-1" />
+                                <Label text="✓" class="text-blue-500 font-bold" visibility="{{ selectedStyle === 'marble' ? 'visible' : 'collapsed' }}" />
+                            </StackLayout>
+                            <StackLayout col="2" class="text-center p-2" tap="{{ onStyleTap }}" id="classic">
+                                <Image src="~/assets/style-classic.png" class="h-16 w-16 rounded-full mx-auto" />
+                                <Label text="Classic" class="text-sm mt-1" />
+                                <Label text="✓" class="text-blue-500 font-bold" visibility="{{ selectedStyle === 'classic' ? 'visible' : 'collapsed' }}" />
+                            </StackLayout>
+                        </GridLayout>
+                        
+                        <Label text="Adjustments" class="font-semibold text-lg mb-2" />
+                        <GridLayout rows="auto, auto, auto" columns="auto, *" class="mb-4">
+                            <Label row="0" col="0" text="Brightness" class="text-sm my-2" />
+                            <Slider row="0" col="1" value="{{ brightness }}" minValue="0.5" maxValue="1.5" valueChange="{{ onBrightnessChange }}" />
+                            
+                            <Label row="1" col="0" text="Contrast" class="text-sm my-2" />
+                            <Slider row="1" col="1" value="{{ contrast }}" minValue="0.5" maxValue="1.5" valueChange="{{ onContrastChange }}" />
+                            
+                            <Label row="2" col="0" text="Saturation" class="text-sm my-2" />
+                            <Slider row="2" col="1" value="{{ saturation }}" minValue="0.5" maxValue="1.5" valueChange="{{ onSaturationChange }}" />
+                        </GridLayout>
+                        
+                        <Button text="Apply Changes" tap="{{ onApplyTap }}" class="btn btn-primary" />
+                    </StackLayout>
+                </ScrollView>
+            </GridLayout>
+        </StackLayout>
+        
+        <!-- Bottom toolbar -->
+        <GridLayout row="1" rows="auto" columns="*, *, *" class="bg-white p-4 border-t border-gray-200">
+            <Button col="0" text="Reset" tap="{{ onResetTap }}" class="btn btn-secondary" />
+            <Button col="1" text="Share" tap="{{ onShareTap }}" class="btn btn-accent" />
+            <Button col="2" text="Copy" tap="{{ onCopyTap }}" class="btn btn-secondary" />
+        </GridLayout>
+    </GridLayout>
+</Page>

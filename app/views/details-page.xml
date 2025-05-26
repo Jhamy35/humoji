@@ -1,0 +1,46 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page">
+    <ActionBar title="Humoji Details" class="bg-white text-black">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" tap="{{ onBackTap }}" />
+        <ActionItem ios.position="right" android.position="actionBar" tap="{{ onDeleteTap }}">
+            <Label text="Delete" class="text-red-500 mr-4" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <!-- Main content area -->
+        <ScrollView row="0">
+            <StackLayout class="p-4">
+                <ActivityIndicator busy="{{ isLoading }}" width="50" height="50" class="m-4" />
+                
+                <StackLayout visibility="{{ isLoading ? 'collapsed' : 'visible' }}" class="slide-up">
+                    <!-- Humoji preview -->
+                    <GridLayout rows="auto" columns="*" class="w-full my-4">
+                        <Image src="{{ imageSource }}" class="humoji-bubble-lg mx-auto shadow-md" />
+                    </GridLayout>
+                    
+                    <!-- Humoji details -->
+                    <StackLayout class="p-4 bg-gray-50 rounded-lg my-4">
+                        <GridLayout rows="auto, auto, auto" columns="auto, *">
+                            <Label row="0" col="0" text="Created" class="font-semibold p-2" />
+                            <Label row="0" col="1" text="{{ createdAt }}" class="p-2" />
+                            
+                            <Label row="1" col="0" text="Style" class="font-semibold p-2" />
+                            <Label row="1" col="1" text="{{ style }}" class="p-2" />
+                            
+                            <Label row="2" col="0" text="Size" class="font-semibold p-2" />
+                            <Label row="2" col="1" text="{{ imageSize }}" class="p-2" />
+                        </GridLayout>
+                    </StackLayout>
+                    
+                    <Label text="Use this humoji in your favorite messaging apps!" class="text-center text-gray-500 text-sm mt-4" textWrap="true" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        
+        <!-- Bottom toolbar -->
+        <GridLayout row="1" rows="auto" columns="*, *" class="bg-white p-4 border-t border-gray-200">
+            <Button col="0" text="Share" tap="{{ onShareTap }}" class="btn btn-accent" />
+            <Button col="1" text="Copy" tap="{{ onCopyTap }}" class="btn btn-primary" />
+        </GridLayout>
+    </GridLayout>
+</Page>
