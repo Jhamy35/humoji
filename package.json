@@ -25,7 +25,7 @@
     "ios": "ns run ios",
     "build:android": "ns build android",
     "build:ios": "ns build ios",
-    "preview": "ns preview --no-hmr",
-    "dev": "ns preview --no-hmr"
+    "preview": "ns preview --no-hmr --env.preview",
+    "dev": "ns preview --no-hmr --env.preview"
   }
 }
