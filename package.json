@@ -25,7 +25,7 @@
     "ios": "ns run ios",
     "build:android": "ns build android",
     "build:ios": "ns build ios",
-    "preview": "ns preview --debug --timeout 120000 --no-hmr",
-    "dev": "ns preview --debug --timeout 120000 --no-hmr"
+    "preview": "ns preview --debug --timeout 180000 --no-hmr --env.socketRetryInterval=10000 --env.maxRetries=15",
+    "dev": "ns preview --debug --timeout 180000 --no-hmr --env.socketRetryInterval=10000 --env.maxRetries=15"
   }
 }
