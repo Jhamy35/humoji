@@ -8,7 +8,7 @@ export default {
     v8Flags: '--expose_gc',
     markingMode: 'none',
     maxLogcatObjectSize: 2048,
-    androidHome: process.env.ANDROID_HOME || '/usr/local/share/android-sdk',
+    androidHome: process.env.ANDROID_HOME || '/opt/android-sdk',
     releaseConfig: {
       keyAlias: 'humojiapp',
       keyPassword: 'YOUR_KEY_PASSWORD',
