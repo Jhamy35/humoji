@@ -23,7 +23,7 @@
     "ios": "ns run ios",
     "build:android": "ns build android",
     "build:ios": "ns build ios",
-    "preview": "ns run preview",
-    "dev": "ns run preview"
+    "preview": "ns preview",
+    "dev": "ns preview"
   }
 }
