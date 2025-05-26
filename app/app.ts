@@ -6,7 +6,10 @@ async function initialize() {
   try {
     const hasPermissions = await checkCameraPermission();
     if (!hasPermissions) {
-      await requestPermissions();
+      const granted = await requestPermissions();
+      if (!granted) {
+        console.warn('Not all permissions were granted');
+      }
     }
   } catch (error) {
     console.error('Error during initialization:', error);
@@ -18,5 +21,6 @@ initialize().then(() => {
   Application.run({ moduleName: 'app-root' });
 }).catch(error => {
   console.error('Failed to initialize app:', error);
-  Application.run({ moduleName: 'app-root' });
+  // Still run the app even if permissions fail
+  Application.run({ moduleName: 'app-root' }); 
 });
