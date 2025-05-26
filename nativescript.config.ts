@@ -1,7 +1,7 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-  id: 'org.nativescript.humoji',
+  id: 'com.jhamy.humoji',
   appPath: 'app',
   appResourcesPath: '../../tools/assets/App_Resources',
   android: {
