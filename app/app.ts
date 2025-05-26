@@ -1,7 +1,14 @@
 import { Application } from '@nativescript/core';
-import { requestPermissions } from './services/permissions-service';
+import { requestPermissions, checkCameraPermission } from './services/permissions-service';
 
 // Request permissions when the app starts
-requestPermissions();
+async function initialize() {
+  const hasPermissions = await checkCameraPermission();
+  if (!hasPermissions) {
+    await requestPermissions();
+  }
+}
 
-Application.run({ moduleName: 'app-root' });
+initialize().then(() => {
+  Application.run({ moduleName: 'app-root' });
+});
