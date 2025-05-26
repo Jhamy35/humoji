@@ -25,7 +25,7 @@
     "ios": "ns run ios",
     "build:android": "ns build android",
     "build:ios": "ns build ios",
-    "preview": "ns preview --debug --timeout 60000",
-    "dev": "ns preview --debug --timeout 60000"
+    "preview": "ns preview --debug --timeout 120000 --no-hmr",
+    "dev": "ns preview --debug --timeout 120000 --no-hmr"
   }
 }
