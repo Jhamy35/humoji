@@ -20,23 +20,12 @@ export default {
     }
   },
   preview: {
-    timeout: 180000,
     port: 0,
     hmr: false,
-    webpackConfig: {
-      optimization: {
-        minimize: false,
-        splitChunks: false
-      },
-      output: {
-        pathinfo: false
-      },
-      cache: {
-        type: 'memory'
-      }
-    },
-    socketRetryInterval: 10000,
-    maxRetries: 15,
-    cleanWebpackCache: true
+    env: {
+      preview: true,
+      production: false,
+      uglify: false
+    }
   }
 } as NativeScriptConfig;
