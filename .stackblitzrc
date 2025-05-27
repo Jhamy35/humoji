@@ -1,7 +1,7 @@
 {
   "installDependencies": true,
   "compileTrigger": "save",
-  "startCommand": "cd ./ && npm run preview-corrected",
+  "startCommand": "npm run web",
   "env": {
     "ANDROID_HOME": "/opt/android-sdk",
     "PATH": "/opt/android-sdk/platform-tools:${PATH}"
