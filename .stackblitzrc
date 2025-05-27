@@ -3,6 +3,7 @@
   "compileTrigger": "save",
   "startCommand": "npm run preview",
   "env": {
-    "ANDROID_HOME": "/opt/android-sdk"
+    "ANDROID_HOME": "/opt/android-sdk",
+    "PATH": "/opt/android-sdk/platform-tools:${PATH}"
   }
 }
