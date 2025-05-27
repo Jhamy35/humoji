@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "dev": "expo start",
-    "preview": "expo preview"
+    "preview": "expo preview",
+    "preview-corrected": "expo preview"
   },
   "dependencies": {
     "expo": "~50.0.5",
